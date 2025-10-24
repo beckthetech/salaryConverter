@@ -38,13 +38,13 @@
     </style>
   </head>
   <body>
-    <h2>Salary Converter</h2>
+    <h2>US Salary Converter</h2>
 
     <input type="number" id="usSalary" placeholder="US Salary" />
     <input
       type="number"
       id="costOfLiving"
-      placeholder="Cost of Living Diff %"
+      placeholder="Cost of Living Difference as a percentage lower than US"
     />
     <a
       href="https://www.numbeo.com/cost-of-living/"
@@ -56,19 +56,23 @@
         color: #007bff;
         text-decoration: none;
       "
-      >Find the Cost of Living Diff % on this site</a
-    >
+      >Find the Cost of Living Diff % (select country)
+    </a>
     <button onclick="calculate()">Convert</button>
 
     <div id="result"></div>
 
     <script>
       function convertSalary(usSalary, costOfLivingDiffPercent) {
-        const comparativeSalary =
-          usSalary * (1 - costOfLivingDiffPercent / 100);
-        const weeklySalary = comparativeSalary / 52;
+        const annualSalary = usSalary * (1 - costOfLivingDiffPercent / 100);
+        const monthlySalary = annualSalary / 12;
+        const weeklySalary = annualSalary / 52;
         const hourlyWage = weeklySalary / 40;
-        return hourlyWage.toFixed(2);
+        return {
+          annual: annualSalary.toFixed(2),
+          monthly: monthlySalary.toFixed(2),
+          hourly: hourlyWage.toFixed(2),
+        };
       }
 
       function calculate() {
@@ -83,10 +87,12 @@
           return;
         }
 
-        const hourly = convertSalary(usSalary, costOfLiving);
-        document.getElementById(
-          "result",
-        ).textContent = `Equivalent hourly wage: $${hourly}`;
+        const salaries = convertSalary(usSalary, costOfLiving);
+        document.getElementById("result").innerHTML = `
+          <div>Annual Salary: $${salaries.annual}</div>
+          <div>Monthly Salary: $${salaries.monthly}</div>
+          <div>Hourly Rate: $${salaries.hourly}</div>
+        `;
       }
     </script>
   </body>
