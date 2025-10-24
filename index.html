@@ -38,13 +38,23 @@
     </style>
   </head>
   <body>
-    <h2>US Salary Converter</h2>
-
+    <h3>Enter US Annual Salary</h3>
     <input type="number" id="usSalary" placeholder="US Salary" />
+    <h3>Enter percentage lower than US</h3>
+    <text
+      >For example: if the average cost of living in Albania is 33.1% lower than
+      the US then you enter 31.1.</text
+    >
+    <br />
+    <br />
+    <text
+      >Use negative numbers for higher, so -10 would be a 10% higher cost of
+      living than the US.</text
+    >
     <input
       type="number"
       id="costOfLiving"
-      placeholder="Cost of Living Difference as a percentage lower than US"
+      placeholder="Cost of Living Difference percentage"
     />
     <a
       href="https://www.numbeo.com/cost-of-living/"
@@ -64,35 +74,35 @@
 
     <script>
       function convertSalary(usSalary, costOfLivingDiffPercent) {
-        const annualSalary = usSalary * (1 - costOfLivingDiffPercent / 100);
-        const monthlySalary = annualSalary / 12;
-        const weeklySalary = annualSalary / 52;
-        const hourlyWage = weeklySalary / 40;
+        const annualSalary = usSalary * (1 - costOfLivingDiffPercent / 100)
+        const monthlySalary = annualSalary / 12
+        const weeklySalary = annualSalary / 52
+        const hourlyWage = weeklySalary / 40
         return {
           annual: annualSalary.toFixed(2),
           monthly: monthlySalary.toFixed(2),
           hourly: hourlyWage.toFixed(2),
-        };
+        }
       }
 
       function calculate() {
-        const usSalary = parseFloat(document.getElementById("usSalary").value);
+        const usSalary = parseFloat(document.getElementById("usSalary").value)
         const costOfLiving = parseFloat(
           document.getElementById("costOfLiving").value,
-        );
+        )
 
         if (isNaN(usSalary) || isNaN(costOfLiving)) {
           document.getElementById("result").textContent =
-            "Please enter valid numbers";
-          return;
+            "Please enter valid numbers"
+          return
         }
 
-        const salaries = convertSalary(usSalary, costOfLiving);
+        const salaries = convertSalary(usSalary, costOfLiving)
         document.getElementById("result").innerHTML = `
           <div>Annual Salary: $${salaries.annual}</div>
           <div>Monthly Salary: $${salaries.monthly}</div>
           <div>Hourly Rate: $${salaries.hourly}</div>
-        `;
+        `
       }
     </script>
   </body>
