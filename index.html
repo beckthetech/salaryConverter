@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Salary Converter</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+      input {
+        width: 100%;
+        padding: 8px;
+        margin: 10px 0;
+        box-sizing: border-box;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      #result {
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #28a745;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Salary Converter</h2>
+
+    <input type="number" id="usSalary" placeholder="US Salary" />
+    <input
+      type="number"
+      id="costOfLiving"
+      placeholder="Cost of Living Diff %"
+    />
+    <button onclick="calculate()">Convert</button>
+
+    <div id="result"></div>
+
+    <script>
+      function convertSalary(usSalary, costOfLivingDiffPercent) {
+        const comparativeSalary =
+          usSalary * (1 - costOfLivingDiffPercent / 100);
+        const weeklySalary = comparativeSalary / 52;
+        const hourlyWage = weeklySalary / 40;
+        return hourlyWage.toFixed(2);
+      }
+
+      function calculate() {
+        const usSalary = parseFloat(document.getElementById("usSalary").value);
+        const costOfLiving = parseFloat(
+          document.getElementById("costOfLiving").value,
+        );
+
+        if (isNaN(usSalary) || isNaN(costOfLiving)) {
+          document.getElementById("result").textContent =
+            "Please enter valid numbers";
+          return;
+        }
+
+        const hourly = convertSalary(usSalary, costOfLiving);
+        document.getElementById(
+          "result",
+        ).textContent = `Equivalent hourly wage: $${hourly}`;
+      }
+    </script>
+  </body>
+</html>
